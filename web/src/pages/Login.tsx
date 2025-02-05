@@ -27,7 +27,7 @@ const Login: FC = () => {
             const res = await axios.post("/api/user/login", values)
             dispatch(hideLoading())
             if (res.data.success) {
-                helper.setToken(res?.data.data.token)
+                helper.setUserData(res?.data.data)
                 dispatch(login(res?.data.data))
                 message.success(res.data.msg)
                 navigate("/")

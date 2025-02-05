@@ -5,6 +5,9 @@ import axios from "axios"
 import helper from "../config/helper"
 import { login, logout } from "../store/reducers/auth"
 import { useEffect } from "react"
+import "../styles/privateLayout.scss"
+import Sidebar from "./Sidebar"
+import Navbar from "./Navbar"
 
 const PrivateLayout = () => {
   // get token from localStorage
@@ -41,16 +44,18 @@ const PrivateLayout = () => {
     <>
       {!isAuthenticated ? <Navigate to="/auth/login" /> :
         <>
-          <div className="container-fluid p-0">
-            <div className="row">
-              <div className="col-3">
-                sidebar
+          <div className="container-fluid p-3">
+            <div className="row g-3 layout overflow-auto">
+              <div className="col-3 p-3 ">
+                <Sidebar/>
               </div>
               <div className="col-9">
-                <div className="mb-3">
-                  navbar
+                <div className="mb-2 p-3">
+                  <Navbar/>
                 </div>
-                <Outlet />
+                <div className="content overflow-auto">
+                  <Outlet />
+                </div>
               </div>
             </div>
           </div>
