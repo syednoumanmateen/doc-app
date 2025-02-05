@@ -2,13 +2,13 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
 // SECRETKEY
-const secretKey = process.enc.SECRET_KEY
+const secretKey = process.env.SECRET_KEY
 
 // hashing password
 const hashedPassword = async (password) => {
     try {
         const salt = await bcrypt.genSalt(10)
-        return await bcrypt.hash(password, salt, secretKey)
+        return await bcrypt.hash(password, salt)
     } catch (e) {
         console.log(`error: ${e}`)
     }
@@ -18,7 +18,7 @@ const hashedPassword = async (password) => {
 // compare password
 const comparePassword = async (password, encryptPassword) => {
     try {
-        return await bcrypt.compare(password, encryptPassword, secretKey)
+        return await bcrypt.compare(password, encryptPassword)
     } catch (e) {
         console.log(`error: ${e}`)
     }

@@ -1,6 +1,11 @@
+import { message } from 'antd';
+import axios from 'axios';
 import { FC } from 'react';
-import { Button, Form, Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { hideLoading, showLoading } from '../store/reducers/default';
+import helper from "../config/helper"
 
 interface FieldType {
     name?: string;
@@ -9,58 +14,58 @@ interface FieldType {
 };
 
 const Register: FC = () => {
-    const appName = import.meta.env.VITE_APP_NAME ?? 'Application';
+    const appName = import.meta.env.VITE_APP_NAME ?? 'Application'; // Fallback in case it's undefined
+    const navigate = useNavigate()//navigation
+    const { register, handleSubmit } = useForm<FieldType>()//react-hook-form declaration
 
-    const onFinish = (values: FieldType) => {
-        console.log('Form submitted:', values); // Debugging form submission
+    // redux
+    const dispatch = useDispatch()
+
+    const onFinish = async (values: FieldType) => {
+        try {
+            dispatch(showLoading())
+            const res = await axios.post("/api/user/register", values)
+            dispatch(hideLoading())
+            if (res.data.success) {
+                message.success(res.data.msg)
+                navigate("/auth/login")
+            } else {
+                message.error(res.data.msg)
+            }
+        } catch (e) {
+            dispatch(hideLoading())
+            message.error("Something Wrong")
+        }
     };
 
-
     return (
-        <Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            autoComplete="off"
-        >
-            <Form.Item
-                label="Name"
-                name="name"
-                rules={[{ required: true, message: 'Please input your name!' }]}
-            >
-                <Input />
-            </Form.Item>
+        <form onSubmit={handleSubmit(onFinish, helper.errorHandle)}>
+            <div>
+                <div className="mb-3">
+                    <label className="form-label">Name</label>
+                    <input type="text" {...register("name", { required: "Name required" })} className="form-control" placeholder="please enter name" />
+                </div>
 
-            <Form.Item
-                label="Email"
-                name="email"
-                rules={[{ required: true, message: 'Please input your email!' }]}
-            >
-                <Input />
-            </Form.Item>
+                <div className="mb-3">
+                    <label className="form-label">Email</label>
+                    <input type="email" {...register("email", { required: "Email required" })} className="form-control" placeholder="please enter email" />
+                </div>
 
-            <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-                <Input.Password />
-            </Form.Item>
+                <div className="mb-3">
+                    <label className="form-label">Password</label>
+                    <input type="password" {...register("password", { required: "Password required" })} className="form-control" placeholder="please enter password" />
+                </div>
 
-            <div className='mb-3'>
-                <span className='text-secondary'>Already user at {appName}? </span>
-                <Link to="/user/login">Login</Link>
+                <div className='mb-3'>
+                    <span className='text-secondary'>Old to {appName}? </span><Link className="text-decoration-none" to="/auth/login">Login</Link>
+                </div>
+
+                <div className="d-flex justify-content-center">
+                    <button type="submit" className="btn btn-primary">Register</button>
+                </div>
             </div>
 
-            <Form.Item label={null}>
-                <Button type="primary" htmlType="submit">
-                    Register
-                </Button>
-            </Form.Item>
-        </Form>
+        </form>
     )
 };
 
