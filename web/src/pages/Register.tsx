@@ -42,17 +42,17 @@ const Register: FC = () => {
         <form onSubmit={handleSubmit(onFinish, helper.errorHandle)}>
             <div>
                 <div className="mb-3">
-                    <label className="form-label">Name</label>
+                    <label className="form-label">Name</label><span style={{ color: "red" }}>*</span>
                     <input type="text" {...register("name", { required: "Name required" })} className="form-control" placeholder="please enter name" />
                 </div>
 
                 <div className="mb-3">
-                    <label className="form-label">Email</label>
+                    <label className="form-label">Email</label><span style={{ color: "red" }}>*</span>
                     <input type="email" {...register("email", { required: "Email required" })} className="form-control" placeholder="please enter email" />
                 </div>
 
                 <div className="mb-3">
-                    <label className="form-label">Password</label>
+                    <label className="form-label">Password</label><span style={{ color: "red" }}>*</span>
                     <input type="password" {...register("password", { required: "Password required" })} className="form-control" placeholder="please enter password" />
                 </div>
 

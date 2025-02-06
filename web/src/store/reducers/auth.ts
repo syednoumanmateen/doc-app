@@ -1,24 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import helper from "../../config/helper"
+const userData = helper.getUserData()
 
 const authSlice = createSlice({
     name: "auth",
     initialState: {
-        isAuthenticated: false,
-        token: null,
-        user: null
+        isAuthenticated: userData?.isAuthenticated || false,
+        user: userData || null
     },
     reducers: {
         login: (state, action) => {
-            const userData = helper.getUserData()
-            state.isAuthenticated = true
-            state.token = action.payload.token || userData.token
+            helper.setUserData({ ...action.payload, isAuthenticated: true })
+            state.isAuthenticated = true || userData?.isAuthenticated
             state.user = action.payload || userData
         },
         logout: (state) => {
             helper.setUserData(null)
             state.isAuthenticated = false
-            state.token = null
             state.user = null
         }
     }

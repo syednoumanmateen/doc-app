@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import CenterScreen from './CenterScreen';
+import { memo } from 'react';
 
 const PublicLayout = () => {
     const pathSegments = window.location.pathname.split("/");
@@ -13,7 +14,7 @@ const PublicLayout = () => {
         <>
             {isAuthenticated ? <Navigate to="/" /> :
                 <CenterScreen style={{ height: "100vh" }}>
-                    <div className="border rounded p-5">
+                    <div className="border rounded p-5 bg-white">
                         <h5 className="mb-5 text-center">
                             {name} Page
                         </h5>
@@ -25,4 +26,4 @@ const PublicLayout = () => {
     )
 }
 
-export default PublicLayout
+export default memo(PublicLayout)

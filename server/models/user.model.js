@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    isadmin: {
+    isAdmin: {
         type: Boolean,
         default: false
     },
@@ -21,11 +21,13 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    notification:{
-        type:[]
+    notification: {
+        type: Array,
+        default: []
     },
-    seennotification:{
-        type:[]
+    seennotification: {
+        type: Array,
+        default: []
     }
 }, {
     timestamps: true

@@ -19,7 +19,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className='d-flex'>
+        <div className='d-flex align-items-center'>
             <h1>Doctor Appointment</h1>
             <div className="ms-auto">
                 {user.name} -  <button className='ms-1 btn btn-outline-secondary' type="submit" onClick={handleLogout}>Logout</button>

@@ -13,9 +13,17 @@ interface FieldType {
     password: string;
 }
 
+// form validation using yup
+// const schema = yup.object().shape({
+//     email: yup.string().email("Invalid email").required("Email is required"),
+//     password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+// });
+// const { register, handleSubmit } = useForm({ resolver: yupResolver(schema) });
+
 const Login: FC = () => {
     const appName = import.meta.env.VITE_APP_NAME ?? 'Application'; // Fallback in case it's undefined
     const navigate = useNavigate()//navigation
+    
     const { register, handleSubmit } = useForm<FieldType>()//react-hook-form declaration
 
     // redux
@@ -44,12 +52,12 @@ const Login: FC = () => {
         <form onSubmit={handleSubmit(onFinish, helper.errorHandle)}>
             <div>
                 <div className="mb-3">
-                    <label className="form-label">Email</label>
+                    <label className="form-label">Email</label><span style={{ color: "red" }}>*</span>
                     <input type="email" {...register("email", { required: "Email required" })} className="form-control" placeholder="please enter email" />
                 </div>
 
                 <div className="mb-3">
-                    <label className="form-label">Password</label>
+                    <label className="form-label">Password</label><span style={{ color: "red" }}>*</span>
                     <input type="password" {...register("password", { required: "Password required" })} className="form-control" placeholder="please enter password" />
                 </div>
 

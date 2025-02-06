@@ -20,5 +20,6 @@ html {
 
 /* For Edge and IE */
 body {
+  background-color: #eff0f1;
   -ms-overflow-style: none;
 }

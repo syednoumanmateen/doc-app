@@ -1,0 +1,33 @@
+@import "./index.scss";
+
+.layout {
+  height: calc(100vh - 22px);
+
+  .c1 {
+    width: 15%;
+
+    @include respond-to(medium) {
+      width: 20%;
+    }
+
+    @include respond-to(large) {
+      width: 15%;
+    }
+  }
+
+  .c2 {
+    width: 85%;
+
+    @include respond-to(medium) {
+      width: 80%;
+    }
+
+    @include respond-to(large) {
+      width: 85%;
+    }
+  }
+
+  .content {
+    height: calc(100vh - 94px);
+  }
+}
